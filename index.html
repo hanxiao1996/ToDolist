@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>todolist</title>
+	<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+	<header>
+		<div class="con">
+		  <h2>ToDoList</h2>
+		  <input placeholder="添加ToDo" type="text">
+		</div>
+	</header>
+	<h2 class="contitle">正在进行    <div class="num">0</div></h2>  
+	<div class="conbox">
+		<!-- div class="conbox1">
+			<input type="checkbox">
+			<p>aaffsf</p>
+			<div class="del"></div>
+		</div> -->
+	</div>
+	<h2 class="contitle">已经完成 <div class="num num1">0</div></h2>
+	<div class="conbox two">
+		<!-- <div class="conbox1">
+			<input type="checkbox">
+			<p>aaffsf</p>
+			<div class="del"></div>
+		</div> -->
+	</div>
+</body>
+<script>
+	let input=document.querySelector("header input");
+	let box1=document.querySelector(".conbox");
+	let box2=document.querySelector(".two");
+    let num1=document.querySelector("h2 .num");
+    let num2=document.querySelector("h2 .num1")
+    let arr1=[];
+	let arr2=[];
+function update(){  
+           box2.innerHTML="";
+           box1.innerHTML="";
+           num1.innerHTML=arr1.length;
+            num2.innerHTML=arr2.length;
+
+          arr1.forEach((item,index)=>{
+          let box=document.createElement("div");
+          box.className="conbox1";
+          let input1=document.createElement("input");
+          input1.setAttribute("class","input");
+           input1.onclick=function(){
+           	arr1.splice(index,1);
+           	arr2.unshift(item);
+           	update();
+           }
+          input1.setAttribute("type","checkbox");
+          let p=document.createElement("p");  
+          p.innerHTML=item;
+
+          p.ondblclick=function(){
+          	let input2=document.createElement("input");
+          	input2.setAttribute("type","text");
+          	 p.appendChild(input2);
+          	  input2.value=p.innerText;
+          	  p.innerText="";
+          	  p.appendChild(input2);
+          	  input2.focus();
+          	 input2.onblur=function(){
+          	 	item=input2.value;
+
+          }}
+          let del=document.createElement("div");
+          del.onclick=function(){
+          	arr1.splice(index,1);
+          	update();
+          }
+          del.className="del";
+          box.append(input1);
+          box.append(p);
+          box.append(del);
+          box1.append(box); 
+       })
+           
+
+          arr2.forEach((item,index)=>{
+          let box=document.createElement("div");
+          box.className="conbox1";
+          let input1=document.createElement("input");
+           input1.setAttribute("class","input");
+          input1.setAttribute("type","checkbox");
+          input1.setAttribute("checked","checked");
+          input1.onclick=function(){
+           	arr2.splice(index,1);
+           	arr1.unshift(item);
+           	update();
+           }
+          let p=document.createElement("p");
+          p.innerHTML=item;
+           p.ondblclick=function(){
+          	let input2=document.createElement("input");
+          	input2.setAttribute("type","text");
+          	 p.appendChild(input2);
+          	  input2.value=p.innerText;
+          	  p.innerText="";
+          	  p.appendChild(input2);
+          	  input2.focus();
+          	 input2.onblur=function(){
+          	 	item=input2.value;
+
+          }}
+          let del=document.createElement("div");
+          del.onclick=function(){
+          	arr2.splice(index,1);
+          	update();
+          }
+          del.className="del";
+          box.append(input1);
+          box.append(p);
+          box.append(del);
+          box2.append(box);
+         
+       })
+      }
+      update(); 
+
+    input.onkeydown=function(e){
+    	if(e.keyCode==13 && this.value!=""){
+    		box1.innerHTML="";
+    		arr1.unshift(input.value); 
+    		input.value="" ;
+    		update();
+      } 
+  }
+</script>
+</html>
